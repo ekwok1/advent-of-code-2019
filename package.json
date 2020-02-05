@@ -1,8 +1,16 @@
 {
   "name": "advent-of-code-2019",
   "version": "1.0.0",
+  "scripts": {
+    "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
+  },
   "dependencies": {
     "@types/node": "^13.7.0",
     "typescript": "^3.7.5"
-  }
+  },
+  "devDependencies": {
+    "@types/jasmine": "^3.5.3",
+    "jasmine": "^3.5.0"
+  },
+  "license": "ISC"
 }

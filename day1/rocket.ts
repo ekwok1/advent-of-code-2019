@@ -1,10 +1,14 @@
 import { Module } from './module.model';
 
-class Rocket {
-  private modules: Module[];
+export class Rocket {
+  get modules() {
+    return this._modules;
+  }
 
-  constructor(args: number[]) {
-    this.modules = args.map(mass => new Module(mass));
+  private _modules: Module[];
+
+  constructor(...args: number[]) {
+    this._modules = args.map(mass => new Module(mass));
   }
 
   getFuel(mass: number): number {
@@ -23,7 +27,7 @@ class Rocket {
   }
 
   getFuelForRocket(): number {
-    return this.modules.reduce((prev, curr) => {
+    return this._modules.reduce((prev, curr) => {
       const fuelForModule = this.getFuel(curr.mass);
       const fuelForFuel = this.getFuelForFuel(fuelForModule);
       return prev + fuelForModule + fuelForFuel;
