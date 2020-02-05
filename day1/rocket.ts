@@ -1,21 +1,32 @@
-import { Utility } from '../Utility';
 import { Module } from './module.model';
 
 class Rocket {
   private modules: Module[];
 
-  constructor(...args: number[]) {
+  constructor(args: number[]) {
     this.modules = args.map(mass => new Module(mass));
   }
 
-  getFuelForModule(mass: number): number {
-    return Math.floor(mass / 3) - 2;
+  getFuel(mass: number): number {
+    const fuelRequired = Math.floor(mass / 3) - 2;
+    return fuelRequired > 0 ? fuelRequired : 0;
+  }
+
+  getFuelForFuel(mass: number): number {
+    const fuelRequired = this.getFuel(mass);
+
+    if (!fuelRequired) {
+      return 0;
+    }
+
+    return fuelRequired + this.getFuelForFuel(fuelRequired);
   }
 
   getFuelForRocket(): number {
-    return this.modules.reduce(
-      (prev, curr) => prev + this.getFuelForModule(curr.mass),
-      0
-    );
+    return this.modules.reduce((prev, curr) => {
+      const fuelForModule = this.getFuel(curr.mass);
+      const fuelForFuel = this.getFuelForFuel(fuelForModule);
+      return prev + fuelForModule + fuelForFuel;
+    }, 0);
   }
 }
