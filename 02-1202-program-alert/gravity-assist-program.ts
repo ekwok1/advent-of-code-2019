@@ -1,12 +1,36 @@
+import { Utility } from '../Utility';
+import { GravityAssistInputs } from './gravity-assist-inputs.model';
+
 export class GravityAssistProgram {
-  get intcodeProgram() {
+  get intcodeProgram(): number[] {
     return this._intcodeProgram;
   }
 
+  private _intcodeMemory: string;
   private _intcodeProgram: number[];
 
-  constructor(...intcodeProgram: number[]) {
-    this._intcodeProgram = intcodeProgram;
+  constructor(intcodeMemory: string) {
+    this._intcodeMemory = intcodeMemory;
+    this._intcodeProgram = Utility.getArgsFromString(intcodeMemory);
+  }
+
+  findNounAndVerb(target: number): GravityAssistInputs {
+    let i = 0;
+    let j = 0;
+    for (i = 0; i <= 99; i++) {
+      for (j = 0; j <= 99; j++) {
+        this.resetMemory();
+        this.intcodeSwap(i, 1);
+        this.intcodeSwap(j, 2);
+        const output = this.getOutput(0);
+        if (output === target) {
+          return {
+            noun: i,
+            verb: j
+          } as GravityAssistInputs;
+        }
+      }
+    }
   }
 
   getOutput(index: number): number {
@@ -14,8 +38,12 @@ export class GravityAssistProgram {
     return this._intcodeProgram[index];
   }
 
-  intcodeSwap(num: number, index: number): void {
+  private intcodeSwap(num: number, index: number): void {
     this._intcodeProgram[index] = num;
+  }
+
+  private resetMemory(): void {
+    this._intcodeProgram = Utility.getArgsFromString(this._intcodeMemory);
   }
 
   private runProgram(): number[] {
