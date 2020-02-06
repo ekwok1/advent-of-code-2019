@@ -9,19 +9,24 @@ export class GravityAssistProgram {
     this._intcodeProgram = intcodeProgram;
   }
 
+  getOutput(index: number): number {
+    this.runProgram();
+    return this._intcodeProgram[index];
+  }
+
   intcodeSwap(num: number, index: number): void {
     this._intcodeProgram[index] = num;
   }
 
-  run(): number[] {
+  private runProgram(): number[] {
     for (let i = 0; i < this._intcodeProgram.length; i += 4) {
-      this.process(i);
+      this.processInstruction(i);
     }
 
     return this._intcodeProgram;
   }
 
-  private process(index: number): void {
+  private processInstruction(index: number): void {
     switch (this._intcodeProgram[index]) {
       case 1: {
         this._intcodeProgram[this._intcodeProgram[index + 3]] =
