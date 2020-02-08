@@ -9,7 +9,7 @@ export class CrossedWires {
     this._wire2Path = this.writeWirePath(wire2);
   }
 
-  findShortestIntersection(): number {
+  findClosestIntersection(): number {
     const intersections = new Set<string>(
       [...this._wire1Path].filter(x => this._wire2Path.has(x))
     );
