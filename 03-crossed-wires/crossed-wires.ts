@@ -1,4 +1,4 @@
-import { WireCoordinates } from "./wire-coordinates.model";
+import { WireCoordinates } from './wire-coordinates.model';
 
 export class CrossedWires {
   private _wire1Map = new Map<string, number>();
@@ -39,31 +39,31 @@ export class CrossedWires {
     let currentX = 0;
     let currentY = 0;
     let currentSteps = 0;
-    const wirePath = wire.split(",");
+    const wirePath = wire.split(',');
 
     wirePath.forEach(instruction => {
       let direction = instruction[0];
       let steps = Number(instruction.slice(1));
       switch (direction) {
-        case "R": {
+        case 'R': {
           for (let i = 0; i < steps; i++) {
             this.addCoordinates(map, ++currentX, currentY, ++currentSteps);
           }
           break;
         }
-        case "L": {
+        case 'L': {
           for (let i = 0; i < steps; i++) {
             this.addCoordinates(map, --currentX, currentY, ++currentSteps);
           }
           break;
         }
-        case "U": {
+        case 'U': {
           for (let i = 0; i < steps; i++) {
             this.addCoordinates(map, currentX, ++currentY, ++currentSteps);
           }
           break;
         }
-        case "D": {
+        case 'D': {
           for (let i = 0; i < steps; i++) {
             this.addCoordinates(map, currentX, --currentY, ++currentSteps);
           }
