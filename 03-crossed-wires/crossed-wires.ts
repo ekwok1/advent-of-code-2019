@@ -1,4 +1,4 @@
-import { WireCoordinates } from "./wire-coordinates";
+import { WireCoordinates } from "./wire-coordinates.model";
 
 export class CrossedWires {
   private _wire1Map = new Map<string, number>();
