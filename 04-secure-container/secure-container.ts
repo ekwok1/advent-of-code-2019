@@ -62,8 +62,22 @@ export class SecureContainer {
 
   private hasTwoAdjacentSameDigits(digits: number[]): boolean {
     let hasAdjacent = false;
+    const invalid = new Set<number>();
 
     for (let i = 0; i < digits.length; i++) {
+      const curr = digits[i];
+      const next = digits[i + 1];
+      const twoAfter = digits[i + 2];
+
+      if (invalid.has(curr)) {
+        continue;
+      }
+
+      if (curr === next && next === twoAfter) {
+        invalid.add(curr);
+        continue;
+      }
+
       if (digits[i] === digits[i + 1]) {
         return true;
       }
