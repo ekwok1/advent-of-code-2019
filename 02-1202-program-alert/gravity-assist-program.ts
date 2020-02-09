@@ -58,14 +58,12 @@ export class GravityAssistProgram {
     switch (this._intcodeProgram[index]) {
       case 1: {
         this._intcodeProgram[this._intcodeProgram[index + 3]] =
-          this._intcodeProgram[this._intcodeProgram[index + 1]] +
-          this._intcodeProgram[this._intcodeProgram[index + 2]];
+          this._intcodeProgram[this._intcodeProgram[index + 1]] + this._intcodeProgram[this._intcodeProgram[index + 2]];
         break;
       }
       case 2: {
         this._intcodeProgram[this._intcodeProgram[index + 3]] =
-          this._intcodeProgram[this._intcodeProgram[index + 1]] *
-          this._intcodeProgram[this._intcodeProgram[index + 2]];
+          this._intcodeProgram[this._intcodeProgram[index + 1]] * this._intcodeProgram[this._intcodeProgram[index + 2]];
       }
       case 99: {
         return;
