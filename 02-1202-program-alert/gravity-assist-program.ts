@@ -2,10 +2,6 @@ import { Utility } from '../Utility';
 import { GravityAssistInputs } from './gravity-assist-inputs.model';
 
 export class GravityAssistProgram {
-  get intcodeProgram(): number[] {
-    return this._intcodeProgram;
-  }
-
   private _intcodeMemory: string;
   private _intcodeProgram: number[];
 
@@ -46,12 +42,10 @@ export class GravityAssistProgram {
     this._intcodeProgram = Utility.getArgsFromString(this._intcodeMemory);
   }
 
-  private runProgram(): number[] {
+  private runProgram(): void {
     for (let i = 0; i < this._intcodeProgram.length; i += 4) {
       this.processInstruction(i);
     }
-
-    return this._intcodeProgram;
   }
 
   private processInstruction(index: number): void {
