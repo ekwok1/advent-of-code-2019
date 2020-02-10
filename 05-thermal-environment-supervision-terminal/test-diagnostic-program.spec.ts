@@ -13,69 +13,63 @@ describe('Thermal Environment Supervision Terminal Diagnostic Program', () => {
     expect(testProgram.getOutput()).toBe(0);
   });
 
-  it('should output 1 if input === 8', () => {
+  it('should output 1 if input === 8 - position', () => {
     testProgram = new TESTDiagnosticProgram(8, '3,9,8,9,10,9,4,9,99,-1,8');
     expect(testProgram.getOutput()).toBe(1);
   });
 
-  it('should output 0 if input !== 8', () => {
+  it('should output 0 if input !== 8 - position', () => {
     testProgram = new TESTDiagnosticProgram(5, '3,9,8,9,10,9,4,9,99,-1,8');
     expect(testProgram.getOutput()).toBe(0);
   });
 
-  it('should output 1 if input < 8', () => {
+  it('should output 1 if input < 8 - position', () => {
     testProgram = new TESTDiagnosticProgram(5, '3,9,7,9,10,9,4,9,99,-1,8');
     expect(testProgram.getOutput()).toBe(1);
   });
 
-  it('should output 0 if input >= 8', () => {
+  it('should output 0 if input >= 8 - position', () => {
     testProgram = new TESTDiagnosticProgram(10, '3,9,7,9,10,9,4,9,99,-1,8');
     expect(testProgram.getOutput()).toBe(0);
   });
 
-  it('should output 1 if input === 8', () => {
+  it('should output 1 if input === 8 - immediate', () => {
     testProgram = new TESTDiagnosticProgram(8, '3,3,1108,-1,8,3,4,3,99');
     expect(testProgram.getOutput()).toBe(1);
   });
 
-  it('should output 0 if input !== 8', () => {
+  it('should output 0 if input !== 8 - immediate', () => {
     testProgram = new TESTDiagnosticProgram(10, '3,3,1108,-1,8,3,4,3,99');
     expect(testProgram.getOutput()).toBe(0);
   });
 
-  it('should output 1 if input < 8', () => {
+  it('should output 1 if input < 8 - immediate', () => {
     testProgram = new TESTDiagnosticProgram(5, '3,3,1107,-1,8,3,4,3,99');
     expect(testProgram.getOutput()).toBe(1);
   });
 
-  it('should output 0 if input >= 8', () => {
+  it('should output 0 if input >= 8 - immediate', () => {
     testProgram = new TESTDiagnosticProgram(10, '3,3,1107,-1,8,3,4,3,99');
     expect(testProgram.getOutput()).toBe(0);
   });
 
-  it('should output 0 if input === 0 || input === 1', () => {
+  it('should output 0 if input === 0 - position', () => {
     testProgram = new TESTDiagnosticProgram(0, '3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9');
-    expect(testProgram.getOutput()).toBe(0);
-
-    testProgram = new TESTDiagnosticProgram(1, '3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9');
     expect(testProgram.getOutput()).toBe(0);
   });
 
-  it('should output 1 if input !== 0 && input !== 1', () => {
-    testProgram = new TESTDiagnosticProgram(2, '3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9');
+  it('should output 1 if input !== 0 - position', () => {
+    testProgram = new TESTDiagnosticProgram(1, '3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9');
     expect(testProgram.getOutput()).toBe(1);
   });
 
-  it('should output 0 if input === 0 || input === 1', () => {
+  it('should output 0 if input === 0 - immediate', () => {
     testProgram = new TESTDiagnosticProgram(0, '3,3,1105,-1,9,1101,0,0,12,4,12,99,1');
-    expect(testProgram.getOutput()).toBe(0);
-
-    testProgram = new TESTDiagnosticProgram(1, '3,3,1105,-1,9,1101,0,0,12,4,12,99,1');
     expect(testProgram.getOutput()).toBe(0);
   });
 
-  it('should output 1 if input !== 0 && input !== 1', () => {
-    testProgram = new TESTDiagnosticProgram(2, '3,3,1105,-1,9,1101,0,0,12,4,12,99,1');
+  it('should output 1 if input !== 0 - immediate', () => {
+    testProgram = new TESTDiagnosticProgram(1, '3,3,1105,-1,9,1101,0,0,12,4,12,99,1');
     expect(testProgram.getOutput()).toBe(1);
   });
 
