@@ -1,13 +1,13 @@
 import { Utility } from '../Utility';
 import { GravityAssistInputs } from './gravity-assist-inputs.model';
+import { OpcodeProgram } from '../shared/opcode-program/opcode-program';
 
-export class GravityAssistProgram {
+export class GravityAssistProgram extends OpcodeProgram {
   private _intcodeMemory: string;
-  private _intcodeProgram: number[];
 
-  constructor(intcodeMemory: string) {
+  constructor(input: number, intcodeMemory: string) {
+    super(input, Utility.getArgsFromString(intcodeMemory));
     this._intcodeMemory = intcodeMemory;
-    this._intcodeProgram = Utility.getArgsFromString(intcodeMemory);
   }
 
   findNounAndVerb(target: number): GravityAssistInputs {
@@ -42,25 +42,19 @@ export class GravityAssistProgram {
     this._intcodeProgram = Utility.getArgsFromString(this._intcodeMemory);
   }
 
-  private runProgram(): void {
-    for (let i = 0; i < this._intcodeProgram.length; i += 4) {
-      this.processInstruction(i);
-    }
-  }
-
-  private processInstruction(index: number): void {
-    switch (this._intcodeProgram[index]) {
+  processInstruction(index: number): void {
+    const opcode = this.getOpcode(this._intcodeProgram[index]);
+    switch (opcode.operation) {
       case 1: {
-        this._intcodeProgram[this._intcodeProgram[index + 3]] =
-          this._intcodeProgram[this._intcodeProgram[index + 1]] + this._intcodeProgram[this._intcodeProgram[index + 2]];
+        this.processOpcodeOne(index, opcode);
         break;
       }
       case 2: {
-        this._intcodeProgram[this._intcodeProgram[index + 3]] =
-          this._intcodeProgram[this._intcodeProgram[index + 1]] * this._intcodeProgram[this._intcodeProgram[index + 2]];
+        this.processOpcodeTwo(index, opcode);
+        break;
       }
       case 99: {
-        return;
+        this._instructionLength = Number.MAX_SAFE_INTEGER;
       }
     }
   }
