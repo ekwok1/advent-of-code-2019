@@ -25,15 +25,17 @@ export abstract class OpcodeProgram {
   }
 
   protected processOpcodeOne(index: number, opcode: Opcode): void {
-    const param1 = this.getParameter(1, index, opcode);
-    const param2 = this.getParameter(2, index, opcode);
+    const param1 = this.getParameter(1, index, opcode.parameter1);
+    const param2 = this.getParameter(2, index, opcode.parameter2);
     this._intcodeProgram[this._intcodeProgram[index + 3]] = param1 + param2;
+    this._instructionLength = 4;
   }
 
   protected processOpcodeTwo(index: number, opcode: Opcode): void {
-    const param1 = this.getParameter(1, index, opcode);
-    const param2 = this.getParameter(2, index, opcode);
+    const param1 = this.getParameter(1, index, opcode.parameter1);
+    const param2 = this.getParameter(2, index, opcode.parameter2);
     this._intcodeProgram[this._intcodeProgram[index + 3]] = param1 * param2;
+    this._instructionLength = 4;
   }
 
   protected processOpcodeThree(index: number): void {
@@ -45,7 +47,40 @@ export abstract class OpcodeProgram {
       opcode.parameter1 === OpcodeMode.Position
         ? this._intcodeProgram[this._intcodeProgram[index + 1]]
         : this._intcodeProgram[index + 1];
+    this._instructionLength = 2;
     console.log(this._output);
+  }
+
+  protected processOpcodeFive(index: number, opcode: Opcode): void {
+    const param1 = this.getParameter(1, index, opcode.parameter1);
+    const param2 = this.getParameter(2, index, opcode.parameter2);
+    const jump = param1 !== 0;
+    this._instructionLength = jump ? param2 - index : 3;
+  }
+
+  protected processOpcodeSix(index: number, opcode: Opcode): void {
+    const param1 = this.getParameter(1, index, opcode.parameter1);
+    const param2 = this.getParameter(2, index, opcode.parameter2);
+    const jump = param1 === 0;
+    this._instructionLength = jump ? param2 - index : 3;
+  }
+
+  protected processOpcodeSeven(index: number, opcode: Opcode): void {
+    const param1 = this.getParameter(1, index, opcode.parameter1);
+    const param2 = this.getParameter(2, index, opcode.parameter2);
+    const param3 = this.getParameter(3, index, OpcodeMode.Immediate);
+
+    const lessThan = param1 < param2;
+    this._intcodeProgram[param3] = lessThan ? 1 : 0;
+  }
+
+  protected processOpcodeEight(index: number, opcode: Opcode): void {
+    const param1 = this.getParameter(1, index, opcode.parameter1);
+    const param2 = this.getParameter(2, index, opcode.parameter2);
+    const param3 = this.getParameter(3, index, OpcodeMode.Immediate);
+
+    const equals = param1 === param2;
+    this._intcodeProgram[param3] = equals ? 1 : 0;
   }
 
   protected runProgram(): void {
@@ -54,9 +89,8 @@ export abstract class OpcodeProgram {
     }
   }
 
-  private getParameter(num: number, index: number, opcode: Opcode): number {
-    const param = num === 1 ? opcode.parameter1 : opcode.parameter2;
-    return param === OpcodeMode.Position
+  private getParameter(num: number, index: number, opcodeMode: OpcodeMode): number {
+    return opcodeMode === OpcodeMode.Position
       ? this._intcodeProgram[this._intcodeProgram[index + num]]
       : this._intcodeProgram[index + num];
   }
