@@ -34,6 +34,24 @@ export class TESTDiagnosticProgram extends OpcodeProgram {
         this.processOpcodeFour(index, opcode);
         break;
       }
+      case 5: {
+        this.processOpcodeFive(index, opcode);
+        break;
+      }
+      case 6: {
+        this.processOpcodeSix(index, opcode);
+        break;
+      }
+      case 7: {
+        this._instructionLength = 4;
+        this.processOpcodeSeven(index, opcode);
+        break;
+      }
+      case 8: {
+        this._instructionLength = 4;
+        this.processOpcodeEight(index, opcode);
+        break;
+      }
       case 99: {
         this._instructionLength = Number.MAX_SAFE_INTEGER;
       }
