@@ -15,7 +15,6 @@ export class TESTDiagnosticProgram {
   constructor(input: number, intcodeProgram: string) {
     this._input = input;
     this._intcodeProgram = Utility.getArgsFromString(intcodeProgram);
-    this.getOutput();
   }
 
   getOutput(): number {
@@ -49,27 +48,27 @@ export class TESTDiagnosticProgram {
     const opcode = this.getOpcode(this._intcodeProgram[index]);
     switch (opcode.operation) {
       case 1: {
-        this.processOpcodeOne(index, opcode);
         this._instructionLength = 4;
+        this.processOpcodeOne(index, opcode);
         break;
       }
       case 2: {
-        this.processOpcodeTwo(index, opcode);
         this._instructionLength = 4;
+        this.processOpcodeTwo(index, opcode);
         break;
       }
       case 3: {
-        this.processOpcodeThree(index);
         this._instructionLength = 2;
+        this.processOpcodeThree(index);
         break;
       }
       case 4: {
-        this.processOpcodeFour(index);
         this._instructionLength = 2;
+        this.processOpcodeFour(index, opcode);
         break;
       }
       case 99: {
-        return;
+        this._instructionLength = Number.MAX_SAFE_INTEGER;
       }
     }
   }
@@ -90,7 +89,11 @@ export class TESTDiagnosticProgram {
     this._intcodeProgram[this._intcodeProgram[index + 1]] = this._input;
   }
 
-  private processOpcodeFour(index: number): void {
-    this._output = this._intcodeProgram[index + 1];
+  private processOpcodeFour(index: number, opcode: Opcode): void {
+    this._output =
+      opcode.parameter1 === OpcodeMode.Position
+        ? this._intcodeProgram[this._intcodeProgram[index + 1]]
+        : this._intcodeProgram[index + 1];
+    console.log(this._output);
   }
 }
