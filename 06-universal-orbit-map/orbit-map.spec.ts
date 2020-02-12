@@ -1,6 +1,6 @@
 import { OrbitMap } from './orbit-map';
 
-describe('Orbit Map', () => {
+xdescribe('Orbit Map', () => {
   let orbitMap: OrbitMap;
   const map = `COM)B
   B)C

@@ -1,12 +1,13 @@
-import { Utility } from '../Utility';
+import { Utility } from '../shared/Utility';
 import { GravityAssistInputs } from './gravity-assist-inputs.model';
 import { OpcodeProgram } from '../shared/opcode-program/opcode-program';
+import { Type } from '../shared/type.enum';
 
 export class GravityAssistProgram extends OpcodeProgram {
   private _intcodeMemory: string;
 
   constructor(input: number, intcodeMemory: string) {
-    super(input, Utility.getArgsFromString(intcodeMemory));
+    super(input, Utility.getArgsFromString(intcodeMemory, Type.Number) as number[]);
     this._intcodeMemory = intcodeMemory;
   }
 
@@ -39,7 +40,7 @@ export class GravityAssistProgram extends OpcodeProgram {
   }
 
   private resetMemory(): void {
-    this._intcodeProgram = Utility.getArgsFromString(this._intcodeMemory);
+    this._intcodeProgram = Utility.getArgsFromString(this._intcodeMemory, Type.Number) as number[];
   }
 
   processInstruction(index: number): void {

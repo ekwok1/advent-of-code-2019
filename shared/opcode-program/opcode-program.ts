@@ -1,5 +1,5 @@
 import { Opcode } from './opcode.model';
-import { Utility } from '../../Utility';
+import { Utility } from '../Utility';
 import { OpcodeMode } from './opcode-mode.enum';
 
 export abstract class OpcodeProgram {
