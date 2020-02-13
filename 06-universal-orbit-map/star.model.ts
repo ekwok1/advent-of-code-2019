@@ -1,6 +1,7 @@
 export class Star {
   name: string;
   level: number;
+  orbits: Star;
   orbiters: Star[] = [];
 
   constructor(name: string, level: number) {

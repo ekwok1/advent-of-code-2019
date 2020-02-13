@@ -48,7 +48,6 @@ export abstract class OpcodeProgram {
         ? this._intcodeProgram[this._intcodeProgram[index + 1]]
         : this._intcodeProgram[index + 1];
     this._instructionLength = 2;
-    console.log(this._output);
   }
 
   protected processOpcodeFive(index: number, opcode: Opcode): void {
