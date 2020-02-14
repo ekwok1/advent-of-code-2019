@@ -12,14 +12,19 @@ export abstract class OpcodeProgram {
     return this._intcodeProgram;
   }
 
+  set instructionLength(value: number) {
+    this.instructionLength = value;
+  }
+
   set intcodeMemory(value: string) {
     this._intcodeMemory = value;
   }
 
+  protected _input: number;
+
   private _instructionLength = 4;
   private _intcodeMemory: string;
   private _intcodeProgram: number[];
-  private _input: number;
   private _output: number;
 
   constructor(input: number, intcodeProgram: number[]) {
