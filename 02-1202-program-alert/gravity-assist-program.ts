@@ -4,8 +4,6 @@ import { OpcodeProgram } from '../shared/opcode-program/opcode-program';
 import { Type } from '../shared/type.enum';
 
 export class GravityAssistProgram extends OpcodeProgram {
-  private _intcodeMemory: string;
-
   constructor(input: number, intcodeMemory: string) {
     super(input, Utility.getArgsFromString(intcodeMemory, Type.Number) as number[]);
     this._intcodeMemory = intcodeMemory;
@@ -35,14 +33,6 @@ export class GravityAssistProgram extends OpcodeProgram {
     return this._intcodeProgram[index];
   }
 
-  private intcodeSwap(num: number, index: number): void {
-    this._intcodeProgram[index] = num;
-  }
-
-  private resetMemory(): void {
-    this._intcodeProgram = Utility.getArgsFromString(this._intcodeMemory, Type.Number) as number[];
-  }
-
   processInstruction(index: number): void {
     const opcode = this.getOpcode(this._intcodeProgram[index]);
     switch (opcode.operation) {
@@ -58,5 +48,9 @@ export class GravityAssistProgram extends OpcodeProgram {
         this._instructionLength = Number.MAX_SAFE_INTEGER;
       }
     }
+  }
+
+  private intcodeSwap(num: number, index: number): void {
+    this._intcodeProgram[index] = num;
   }
 }

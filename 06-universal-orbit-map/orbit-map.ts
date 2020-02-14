@@ -144,7 +144,3 @@ export class OrbitMap {
     });
   }
 }
-
-const map = Utility.getArgsFromString(Utility.readFile('./input.txt'), Type.String, '\n') as string[];
-const orbitMap = new OrbitMap(map);
-console.log(orbitMap.getOrbitalTransfers('YOU', 'SAN'));

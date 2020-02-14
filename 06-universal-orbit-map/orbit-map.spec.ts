@@ -1,6 +1,6 @@
 import { OrbitMap } from './orbit-map';
 
-fdescribe('Orbit Map', () => {
+describe('Orbit Map', () => {
   let orbitMap: OrbitMap;
   const map = ['COM)B', 'B)C', 'C)D', 'D)E', 'E)F', 'B)G', 'G)H', 'D)I', 'E)J', 'J)K', 'K)L'];
   const santaMap = [...map.slice(), 'K)YOU', 'I)SAN'] as string[];

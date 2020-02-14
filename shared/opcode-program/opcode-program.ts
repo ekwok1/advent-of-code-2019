@@ -1,10 +1,12 @@
 import { Opcode } from './opcode.model';
 import { Utility } from '../Utility';
 import { OpcodeMode } from './opcode-mode.enum';
+import { Type } from '../type.enum';
 
 export abstract class OpcodeProgram {
   protected _input: number;
   protected _instructionLength = 4;
+  protected _intcodeMemory: string;
   protected _intcodeProgram: number[];
   protected _output: number;
 
@@ -80,6 +82,10 @@ export abstract class OpcodeProgram {
 
     const equals = param1 === param2;
     this._intcodeProgram[param3] = equals ? 1 : 0;
+  }
+
+  protected resetMemory(): void {
+    this._intcodeProgram = Utility.getArgsFromString(this._intcodeMemory, Type.Number) as number[];
   }
 
   protected runProgram(): void {
