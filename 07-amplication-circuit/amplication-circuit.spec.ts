@@ -1,6 +1,6 @@
 import { AmplicationCircuit } from './amplication-circuit';
 
-describe('Thermal Environment Supervision Terminal Diagnostic Program', () => {
+describe('Amplication Circuit', () => {
   let ampCircuit: AmplicationCircuit;
 
   it('should get max thruster signal for example 1', () => {
