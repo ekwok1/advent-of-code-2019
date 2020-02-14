@@ -4,18 +4,28 @@ import { OpcodeMode } from './opcode-mode.enum';
 import { Type } from '../type.enum';
 
 export abstract class OpcodeProgram {
-  protected _input: number;
-  protected _instructionLength = 4;
-  protected _intcodeMemory: string;
-  protected _intcodeProgram: number[];
-  protected _output: number;
+  get output() {
+    return this._output;
+  }
+
+  get intcodeProgram() {
+    return this._intcodeProgram;
+  }
+
+  set intcodeMemory(value: string) {
+    this._intcodeMemory = value;
+  }
+
+  private _instructionLength = 4;
+  private _intcodeMemory: string;
+  private _intcodeProgram: number[];
+  private _input: number;
+  private _output: number;
 
   constructor(input: number, intcodeProgram: number[]) {
     this._input = input;
     this._intcodeProgram = intcodeProgram;
   }
-
-  abstract processInstruction(index: number): void;
 
   protected getOpcode(code: number): Opcode {
     return {
@@ -24,6 +34,53 @@ export abstract class OpcodeProgram {
       parameter2: Utility.getDigit(code, 4),
       parameter3: Utility.getDigit(code, 5)
     } as Opcode;
+  }
+
+  protected processInstruction(index: number): void {
+    const opcode = this.getOpcode(this._intcodeProgram[index]);
+    switch (opcode.operation) {
+      case 1: {
+        this._instructionLength = 4;
+        this.processOpcodeOne(index, opcode);
+        break;
+      }
+      case 2: {
+        this._instructionLength = 4;
+        this.processOpcodeTwo(index, opcode);
+        break;
+      }
+      case 3: {
+        this._instructionLength = 2;
+        this.processOpcodeThree(index);
+        break;
+      }
+      case 4: {
+        this._instructionLength = 2;
+        this.processOpcodeFour(index, opcode);
+        break;
+      }
+      case 5: {
+        this.processOpcodeFive(index, opcode);
+        break;
+      }
+      case 6: {
+        this.processOpcodeSix(index, opcode);
+        break;
+      }
+      case 7: {
+        this._instructionLength = 4;
+        this.processOpcodeSeven(index, opcode);
+        break;
+      }
+      case 8: {
+        this._instructionLength = 4;
+        this.processOpcodeEight(index, opcode);
+        break;
+      }
+      case 99: {
+        this._instructionLength = Number.MAX_SAFE_INTEGER;
+      }
+    }
   }
 
   protected processOpcodeOne(index: number, opcode: Opcode): void {

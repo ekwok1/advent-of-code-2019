@@ -6,7 +6,7 @@ import { Type } from '../shared/type.enum';
 export class GravityAssistProgram extends OpcodeProgram {
   constructor(input: number, intcodeMemory: string) {
     super(input, Utility.getArgsFromString(intcodeMemory, Type.Number) as number[]);
-    this._intcodeMemory = intcodeMemory;
+    this.intcodeMemory = intcodeMemory;
   }
 
   findNounAndVerb(target: number): GravityAssistInputs {
@@ -30,27 +30,10 @@ export class GravityAssistProgram extends OpcodeProgram {
 
   getOutput(index: number): number {
     this.runProgram();
-    return this._intcodeProgram[index];
-  }
-
-  processInstruction(index: number): void {
-    const opcode = this.getOpcode(this._intcodeProgram[index]);
-    switch (opcode.operation) {
-      case 1: {
-        this.processOpcodeOne(index, opcode);
-        break;
-      }
-      case 2: {
-        this.processOpcodeTwo(index, opcode);
-        break;
-      }
-      case 99: {
-        this._instructionLength = Number.MAX_SAFE_INTEGER;
-      }
-    }
+    return this.intcodeProgram[index];
   }
 
   private intcodeSwap(num: number, index: number): void {
-    this._intcodeProgram[index] = num;
+    this.intcodeProgram[index] = num;
   }
 }
