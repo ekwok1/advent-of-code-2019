@@ -2,7 +2,7 @@ import { OpcodeProgram } from '../shared/opcode-program/opcode-program';
 import { Utility } from '../shared/Utility';
 import { Type } from '../shared/type.enum';
 
-export class AmplicationCircuit extends OpcodeProgram {
+export class AmplificationCircuit extends OpcodeProgram {
   private _firstInput = true;
   private _secondInput = 0;
   private _phaseSettings = [0, 1, 2, 3, 4];
