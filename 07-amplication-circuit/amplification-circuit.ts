@@ -44,5 +44,6 @@ export class AmplificationCircuit extends OpcodeProgram {
     }
 
     this._firstInput = !this._firstInput;
+    this.instructionLength = 2;
   }
 }

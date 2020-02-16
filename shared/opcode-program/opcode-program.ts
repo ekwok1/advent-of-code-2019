@@ -13,7 +13,7 @@ export abstract class OpcodeProgram {
   }
 
   set instructionLength(value: number) {
-    this.instructionLength = value;
+    this._instructionLength = value;
   }
 
   set intcodeMemory(value: string) {
@@ -45,22 +45,18 @@ export abstract class OpcodeProgram {
     const opcode = this.getOpcode(this._intcodeProgram[index]);
     switch (opcode.operation) {
       case 1: {
-        this._instructionLength = 4;
         this.processOpcodeOne(index, opcode);
         break;
       }
       case 2: {
-        this._instructionLength = 4;
         this.processOpcodeTwo(index, opcode);
         break;
       }
       case 3: {
-        this._instructionLength = 2;
         this.processOpcodeThree(index);
         break;
       }
       case 4: {
-        this._instructionLength = 2;
         this.processOpcodeFour(index, opcode);
         break;
       }
@@ -73,12 +69,10 @@ export abstract class OpcodeProgram {
         break;
       }
       case 7: {
-        this._instructionLength = 4;
         this.processOpcodeSeven(index, opcode);
         break;
       }
       case 8: {
-        this._instructionLength = 4;
         this.processOpcodeEight(index, opcode);
         break;
       }
@@ -89,20 +83,23 @@ export abstract class OpcodeProgram {
   }
 
   protected processOpcodeOne(index: number, opcode: Opcode): void {
+    this._instructionLength = 4;
     const param1 = this.getParameter(1, index, opcode.parameter1);
     const param2 = this.getParameter(2, index, opcode.parameter2);
+
     this._intcodeProgram[this._intcodeProgram[index + 3]] = param1 + param2;
-    this._instructionLength = 4;
   }
 
   protected processOpcodeTwo(index: number, opcode: Opcode): void {
+    this._instructionLength = 4;
     const param1 = this.getParameter(1, index, opcode.parameter1);
     const param2 = this.getParameter(2, index, opcode.parameter2);
+
     this._intcodeProgram[this._intcodeProgram[index + 3]] = param1 * param2;
-    this._instructionLength = 4;
   }
 
   protected processOpcodeThree(index: number): void {
+    this._instructionLength = 2;
     this._intcodeProgram[this._intcodeProgram[index + 1]] = this._input;
   }
 
@@ -135,6 +132,8 @@ export abstract class OpcodeProgram {
 
     const lessThan = param1 < param2;
     this._intcodeProgram[param3] = lessThan ? 1 : 0;
+
+    this._instructionLength = 4;
   }
 
   protected processOpcodeEight(index: number, opcode: Opcode): void {
@@ -144,6 +143,8 @@ export abstract class OpcodeProgram {
 
     const equals = param1 === param2;
     this._intcodeProgram[param3] = equals ? 1 : 0;
+
+    this._instructionLength = 4;
   }
 
   protected resetMemory(): void {
